@@ -18,29 +18,29 @@ class SpatieSeeder extends Seeder
     public function run(): void
     {
         // create permissions
-        Permission::create(['name' => 'view posts']);
-        Permission::create(['name' => 'create posts']);
-        Permission::create(['name' => 'edit posts']);
-        Permission::create(['name' => 'delete posts']);
-        Permission::create(['name' => 'publish posts']);
-        Permission::create(['name' => 'unpublish posts']);
+        // Permission::create(['name' => 'view posts']);
+        // Permission::create(['name' => 'create posts']);
+        // Permission::create(['name' => 'edit posts']);
+        // Permission::create(['name' => 'delete posts']);
+        // Permission::create(['name' => 'publish posts']);
+        // Permission::create(['name' => 'unpublish posts']);
 
         //create roles and assign existing permissions
-        $writerRole = Role::create(['name' => 'writer']);
-        $writerRole->givePermissionTo('view posts');
-        $writerRole->givePermissionTo('create posts');
-        $writerRole->givePermissionTo('edit posts');
-        $writerRole->givePermissionTo('delete posts');
+        $userRole = Role::create(['name' => 'user']);
+        // $writerRole->givePermissionTo('view posts');
+        // $writerRole->givePermissionTo('create posts');
+        // $writerRole->givePermissionTo('edit posts');
+        // $writerRole->givePermissionTo('delete posts');
 
         $adminRole = Role::create(['name' => 'admin']);
-        $adminRole->givePermissionTo('view posts');
-        $adminRole->givePermissionTo('create posts');
-        $adminRole->givePermissionTo('edit posts');
-        $adminRole->givePermissionTo('delete posts');
-        $adminRole->givePermissionTo('publish posts');
-        $adminRole->givePermissionTo('unpublish posts');
+        // $adminRole->givePermissionTo('view posts');
+        // $adminRole->givePermissionTo('create posts');
+        // $adminRole->givePermissionTo('edit posts');
+        // $adminRole->givePermissionTo('delete posts');
+        // $adminRole->givePermissionTo('publish posts');
+        // $adminRole->givePermissionTo('unpublish posts');
 
-        $superadminRole = Role::create(['name' => 'super-admin']);
+        $superadminRole = Role::create(['name' => 'superadmin']);
         // gets all permissions via Gate::before rule
 
         // create demo users
@@ -49,7 +49,7 @@ class SpatieSeeder extends Seeder
             'email' => 'user@kvi.com',
             'password' => bcrypt('12345678')
         ]);
-        $user->assignRole($writerRole);
+        $user->assignRole($userRole);
 
         $user = User::factory()->create([
             'name' => 'Administrator',
