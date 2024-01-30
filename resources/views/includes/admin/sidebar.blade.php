@@ -8,9 +8,15 @@
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="menu-title mt-2">
+                <li class="menu-title mt-2">
                     <span>Users</span>
-                </li> --}}
+                </li>
+                <li>
+                    <a href="{{ route('admin.user.index') }}" class="@if (Request::segment(1) == 'dashboard') active @endif">
+                        <span class="nav-icon uil uil-create-dashboard"></span>
+                        <span class="menu-text">Users</span>
+                    </a>
+                </li>
                 {{-- <li class="">
                     <a href="sign-up.html">
                         <span class="nav-icon uil uil-sign-out-alt"></span>
