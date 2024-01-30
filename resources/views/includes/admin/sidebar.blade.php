@@ -12,7 +12,7 @@
                     <span>Users</span>
                 </li>
                 <li>
-                    <a href="{{ route('admin.user.index') }}" class="@if (Request::segment(1) == 'dashboard') active @endif">
+                    <a href="{{ route('admin.user.index') }}" class="@if (Request::segment(2) == 'user') active @endif">
                         <span class="nav-icon uil uil-create-dashboard"></span>
                         <span class="menu-text">Users</span>
                     </a>

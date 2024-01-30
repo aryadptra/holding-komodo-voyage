@@ -1,4 +1,4 @@
-@props(['title' => '', 'items' => []])
+@props(['title' => '', 'items' => [], 'current_page' => ''])
 
 <div class="breadcrumb-main">
     <h4 class="text-capitalize breadcrumb-title">{{ $title }}</h4>
@@ -14,6 +14,11 @@
                         </a>
                     </li>
                 @endforeach
+                <li class="breadcrumb-item">
+                    <a href="#">
+                        {{ $current_page }}
+                    </a>
+                </li>
             </ol>
         </nav>
     </div>

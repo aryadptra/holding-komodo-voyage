@@ -1,21 +1,13 @@
-{{-- @extends('user::layouts.master')
+@extends('user::layouts.master')
 
-@section('content')
-    <h1>Hello World</h1>
+{{-- Menyimpan nilai current_page ke dalam variabel --}}
+@php
+    $currentPage = config('user.pages.manage'); // Diambil dari config/config.php
+@endphp
 
-    <p>Module: {!! config('user.name') !!}</p>
-@endsection --}}
+{{-- Set section title dengan nilai dari current_page --}}
+@section('title', $currentPage)
 
-
-@extends('layouts.admin')
-
-@section('title', 'Users')
-
-@section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <x-breadcrumb :title="'Users'" :items="[['url' => route('admin.user.index'), 'label' => 'Users']]" />
-
-        </div>
-    </div>
+{{-- Contents here --}}
+@section('contents')
 @endsection
