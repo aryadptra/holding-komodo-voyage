@@ -8,9 +8,9 @@
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="menu-title mt-2">
+                {{-- <li class="menu-title mt-2">
                     <span>Users</span>
-                </li>
+                </li> --}}
                 {{-- <li class="">
                     <a href="sign-up.html">
                         <span class="nav-icon uil uil-sign-out-alt"></span>

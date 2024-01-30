@@ -15,4 +15,4 @@
 <link rel="stylesheet" href="{{ asset('admin/assets/vendor_assets/css/star-rating-svg.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/assets/vendor_assets/css/trumbowyg.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/assets/vendor_assets/css/wickedpicker.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin/style.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/assets/theme_assets/sass/style.css') }}">
