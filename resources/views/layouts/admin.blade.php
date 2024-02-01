@@ -24,6 +24,7 @@
 </head>
 
 <body class="layout-light side-menu">
+    @stack('scripts-before')
     <div class="mobile-author-actions"></div>
     @include('includes.admin.header')
     <main class="main-content">

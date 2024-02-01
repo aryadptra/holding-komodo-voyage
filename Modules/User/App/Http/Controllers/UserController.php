@@ -3,6 +3,7 @@
 namespace Modules\User\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,7 +15,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user::index');
+        $user = User::all();
+        return view('user::index', [
+            'user' => $user
+        ]);
     }
 
     /**
