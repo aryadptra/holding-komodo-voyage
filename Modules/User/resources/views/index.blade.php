@@ -27,7 +27,7 @@
             @endif
         </div>
         <div class="col-lg-12">
-            <div class="card mt-30">
+            <div class="card mt-30 mb-30">
                 <div class="card-body">
                     <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table">
                         <div class="table-responsive">
@@ -64,6 +64,9 @@
                                             <span class="userDatatable-title">emaill</span>
                                         </th>
                                         <th>
+                                            <span class="userDatatable-title">role</span>
+                                        </th>
+                                        <th>
                                             <span class="userDatatable-title float-right">action</span>
                                         </th>
                                     </tr>
@@ -86,6 +89,11 @@
                                             <td>
                                                 <div class="userDatatable-content">
                                                     {{ $data->email }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    {{ $data->get_role() }}
                                                 </div>
                                             </td>
                                             <td>

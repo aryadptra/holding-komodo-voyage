@@ -43,4 +43,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function get_role(): string
+    {
+        // Mendapatkan nama peran sebagai koleksi (Collection) atau array
+        $roleNames = $this->getRoleNames();
+
+        // Menghapus tanda kurung siku dan tanda kutip ganda
+        $cleanedString = implode(', ', $roleNames->toArray());
+
+        return $cleanedString;
+    }
 }
