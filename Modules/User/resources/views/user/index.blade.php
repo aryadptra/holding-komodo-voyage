@@ -14,20 +14,20 @@
         <div class="col-12">
             {{-- Jika ada flash session message --}}
             @if (session()->has('success'))
-                <div class=" alert alert-success alert-dismissible fade show " role="alert">
+                <div class=" alert alert-success alert-dismissible fade show mb-3" role="alert">
                     <div class="alert-content">
                         <p>
                             {{ session()->get('success') }}
                         </p>
                         <button type="button" class="btn-close text-capitalize" data-bs-dismiss="alert" aria-label="Close">
-                            <img src="{{ asset('backend/img/svg/x.svg') }}" alt="x" class="svg" aria-hidden="true">
+                            <img src="{{ asset('admin/img/svg/x.svg') }}" alt="x" class="svg" aria-hidden="true">
                         </button>
                     </div>
                 </div>
             @endif
         </div>
         <div class="col-lg-12">
-            <div class="card mt-30 mb-30">
+            <div class="card mb-30">
                 <div class="card-body">
                     <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table">
                         <div class="table-responsive">
@@ -38,9 +38,10 @@
                                         <a class="btn btn-primary dropdown-toggle dm-select" href="#" role="button"
                                             id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            Export
+                                            Data
                                         </a>
                                         <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ route('admin.user.create') }}">create</a>
                                             <a class="dropdown-item" href="#">copy</a>
                                             <a class="dropdown-item" href="#">csv</a>
                                             <a class="dropdown-item" href="#">print</a>
@@ -103,14 +104,28 @@
                                                             <i class="uil uil-eye"></i></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" class="edit">
+                                                        <a href="{{ route('admin.user.edit', $data->id) }}" class="edit">
                                                             <i class="uil uil-edit"></i></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" class="remove">
+                                                        <form action="{{ route('admin.user.destroy', $data->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn-link border-0 bg-transparent p-0"
+                                                                onclick="return confirm('Are you sure you want to delete this user?')"">
+                                                                <img src="{{ asset('admin/img/svg/trash-2.svg') }}"
+                                                                    alt="trash-2" class="svg">
+                                                            </button>
+                                                        </form>
+
+                                                        {{-- <a href="{{ route('admin.user.destroy', $data->id) }}"
+                                                            class="remove">
                                                             <img src="{{ asset('admin/img/svg/trash-2.svg') }}"
-                                                                alt="trash-2" class="svg"></a>
+                                                                alt="trash-2" class="svg"></a> --}}
                                                     </li>
+
                                                 </ul>
                                             </td>
                                         </tr>
