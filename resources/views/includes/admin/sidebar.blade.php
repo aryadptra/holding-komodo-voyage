@@ -8,15 +8,16 @@
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="menu-title mt-2">
-                    <span>Users</span>
-                </li> --}}
-                {{-- <li class="">
-                    <a href="sign-up.html">
+                <li class="menu-title mt-2">
+                    <span>Master Data</span>
+                </li>
+                <li class="">
+                    <a href="{{ route('admin.categories.index') }}"
+                        class="@if (Request::segment(2) == 'categories') active @endif">
                         <span class="nav-icon uil uil-sign-out-alt"></span>
-                        <span class="menu-text">Sign Up</span>
+                        <span class="menu-text">Categories</span>
                     </a>
-                </li> --}}
+                </li>
             </ul>
         </div>
     </div>

@@ -9,8 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function articles()
-    {
-        return $this->belongsToMany('App\Article');
-    }
+    protected $guarded = ['id'];
+
+    // public function articles()
+    // {
+    //     return $this->belongsToMany('App\Article');
+    // }
 }

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use File;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -27,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('landing.categories.index');
+        return view('landing.categories.create');
     }
 
     /**
@@ -38,27 +42,26 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        \Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'name'          => 'required|min:2|max:20|unique:categories',
             'description'   => 'required',
             'image'         => 'required',
         ])->validate();
 
-        $new_category = new \App\Category;
+        $new_category = new Category();
         $new_category->name         = strtoupper($request->get('name'));
         $new_category->description  = $request->get('description');
-        $new_category->create_by    = \Auth::user()->id;
-        $new_category->slug         = \Str::slug($request->get('name'), '-');
+        $new_category->create_by    = Auth::user()->id;
+        $new_category->slug         = Str::slug($request->get('name'));
 
         if ($request->file('image')) {
-            // $image_path = $request->file('image')->store('category_image', 'public');
             $nama_file = time() . "_" . $request->file('image')->getClientOriginalName();
             $image_path = $request->file('image')->move('category_image', $nama_file);
             $new_category->image = $nama_file;
         }
 
         $new_category->save();
-        return redirect()->route('categories.index')->with('success', 'Category successfully created');
+        return redirect()->route('admin.categories.index')->with('success', 'Category successfully created');
     }
 
     /**
@@ -80,8 +83,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = \App\Category::findOrFail($id);
-        return view('categories.edit', ['category' => $category]);
+        // $category = \App\Category::findOrFail($id);
+        $category = Category::findOrFail($id);
+        return view('landing.categories.edit', ['category' => $category]);
     }
 
     /**
@@ -93,43 +97,44 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = \App\Category::findOrFail($id);
+        // Validasi input
+        $validatedData = $request->validate([
+            'name' => 'required|min:2|max:20',
+            'description' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // tambahkan validasi untuk file gambar
+        ]);
 
-        \Validator::make($request->all(), [
-            'name'          => 'required|min:2|max:20',
-            'description'   => 'required',
-            'slug'          => 'required',
-        ])->validate();
+        // Temukan kategori berdasarkan ID
+        $category = Category::findOrFail($id);
 
-        $category->name         = $request->get('name');
-        $category->description  = $request->get('description');
-        $category->slug         = $request->get('slug');
+        // Set nilai atribut kategori berdasarkan data yang diterima dari request
+        $category->name = $validatedData['name'];
+        $category->description = $validatedData['description'];
+        $category->slug = Str::slug($validatedData['name']);
 
 
-        if ($request->file('image')) {
-            // ebook
-            // if($category->image && file_exists(storage_path('app/public/'.$category->image))){
-            //     \Storage::delete('public/'.$category->image);
-            // }
-            // $new_image = $request->file('image')->store('category_image', 'public');
-
+        // Periksa apakah ada file gambar yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
             if ($category->image) {
-                File::delete('category_image/' . $category->image);
+                Storage::delete('category_image/' . $category->image);
             }
-            // $new_image = $request->file('image')->store('category_image', 'public');
-            $nama_file = time() . "_" . $request->file('image')->getClientOriginalName();
-            $new_image = $request->file('image')->move('category_image', $nama_file);
 
-            $category->image = $nama_file;
+            // Simpan gambar yang baru diunggah
+            $imagePath = $request->file('image')->store('category_image');
+            $category->image = $imagePath;
         }
 
-        $category->update_by    = \Auth::user()->id;
-        $category->slug         = \Str::slug($request->get('name'));
+        // Update atribut lainnya
+        $category->update_by = Auth::id();
 
+        // Simpan perubahan pada kategori
         $category->save();
 
-        return redirect()->route('categories.index')->with('success', 'Category successfully updated');
+        // Redirect kembali ke halaman index dengan pesan sukses
+        return redirect()->route('admin.categories.index')->with('success', 'Category successfully updated');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -139,14 +144,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = \App\Category::findOrFail($id);
-        $category->articles()->sync([]);
+        $category = Category::findOrFail($id);
+        // $category->articles()->sync([]);
         if ($category->image) {
             File::delete('category_image/' . $category->image);
         }
         $category->forceDelete();
 
-        return redirect()->route('categories.index')->with('success', 'Category successfully deleted.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category successfully deleted.');
     }
 
     public function restore($id)
@@ -157,12 +162,8 @@ class CategoryController extends Controller
 
     public function deletePermanent($id)
     {
-        $category = \App\Category::withTrashed()->findOrFail($id);
-        $category->articles()->sync([]);
+        $category = Category::findOrFail($id);
 
-        // if($category->image && file_exist(storage_path('app/public/'.$category->image))){
-        //     \Storage::delete('public/'.$category->image);
-        // }
         if ($category->image) {
             File::delete('category_image/' . $category->image);
         }
@@ -170,8 +171,6 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')->with('success', 'Category successfully deleted.');
     }
-
-
 
     // ajax select2
     public function ajaxSearch(Request $request)
