@@ -108,22 +108,24 @@
                                                             <i class="uil uil-edit"></i></a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('admin.user.destroy', $data->id) }}"
+                                                        <form hidden id="deleteForm-{{ $data->id }}"
+                                                            action="{{ route('admin.user.destroy', $data->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn-link border-0 bg-transparent p-0"
-                                                                onclick="return confirm('Are you sure you want to delete this user?')"">
+                                                            <button type="submit" class="remove"
+                                                                onclick="return confirm('Are you sure you want to delete this user?')"
+                                                                style="border: none; background: none;">
                                                                 <img src="{{ asset('admin/img/svg/trash-2.svg') }}"
                                                                     alt="trash-2" class="svg">
                                                             </button>
                                                         </form>
 
-                                                        {{-- <a href="{{ route('admin.user.destroy', $data->id) }}"
-                                                            class="remove">
+                                                        <a href="#" class="remove"
+                                                            onclick="document.getElementById('deleteForm-{{ $data->id }}').submit(); return false;">
                                                             <img src="{{ asset('admin/img/svg/trash-2.svg') }}"
-                                                                alt="trash-2" class="svg"></a> --}}
+                                                                alt="trash-2" class="svg">
+                                                        </a>
                                                     </li>
 
                                                 </ul>
