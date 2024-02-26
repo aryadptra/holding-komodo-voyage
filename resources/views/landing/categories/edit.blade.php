@@ -18,7 +18,6 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-
                     <div class="col-12 mb-3">
                         <h3 align="center">Edit Category</h3>
                     </div>

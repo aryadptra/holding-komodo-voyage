@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/categories', CategoryController::class);
+    Route::get('/ajax/categories/search', [CategoryController::class, 'ajaxSearch'])->name('categories.search');
+    Route::resource('/articles', ArticleController::class);
+    Route::post('/articles/upload', [ArticleController::class, 'upload'])->name('articles.upload');
 });
 
 require __DIR__ . '/auth.php';

@@ -18,6 +18,13 @@
                         <span class="menu-text">Categories</span>
                     </a>
                 </li>
+                <li class="">
+                    <a href="{{ route('admin.articles.index') }}"
+                        class="@if (Request::segment(2) == 'articles') active @endif">
+                        <span class="nav-icon uil uil-sign-out-alt"></span>
+                        <span class="menu-text">Articles</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

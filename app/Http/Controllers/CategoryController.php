@@ -176,7 +176,7 @@ class CategoryController extends Controller
     public function ajaxSearch(Request $request)
     {
         $keyword = $request->get('q');
-        $categories = \App\Category::where('name', 'Like', "%$keyword%")->get();
+        $categories = Category::where('name', 'Like', "%$keyword%")->get();
         return $categories;
     }
 }
