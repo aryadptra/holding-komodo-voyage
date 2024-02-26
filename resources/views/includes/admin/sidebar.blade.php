@@ -25,6 +25,12 @@
                         <span class="menu-text">Articles</span>
                     </a>
                 </li>
+                <li class="">
+                    <a href="{{ route('admin.about.index') }}" class="@if (Request::segment(2) == 'about') active @endif">
+                        <span class="nav-icon uil uil-sign-out-alt"></span>
+                        <span class="menu-text">About</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
